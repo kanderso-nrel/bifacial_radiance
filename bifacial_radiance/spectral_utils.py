@@ -153,11 +153,41 @@ def spectral_albedo_smarts(zen, azm, material, min_wavelength=300,
 def spectral_irradiance_smarts(zen, azm):
     try:
         from pySMARTS.smarts import SMARTSSpectraZenAzm
+        from pySMARTS.smarts import SMARTSSRRL
+
     except:
         print("Warning: Could not load pySMARTS module.")
         return None
     
-    smarts_res = SMARTSSpectraZenAzm('2 3 4', str(zen), str(azm))
+ #   smarts_res = SMARTSSpectraZenAzm('2 3 4', str(zen), str(azm))
+    
+    
+    # TEMP ADITION
+    YEAR =  '2020'
+    MONTH =  '10'
+    DAY =  '21'
+    HOUR =  '12.75'
+    LATIT =  '39.74'
+    LONGIT =  '-105.17'
+    ALTIT =  '1.0'
+    ZONE =  '-7'
+    W =  '0'
+    RH =  '24.93'
+    TAIR =  '19.89'
+    SEASON =  'WINTER'
+    TDAY =  '12.78'
+    SPR =  '810.373'
+    TAU5 =  '0.1858'
+    TILT =  '0.0'
+    WAZIM =  '180.0'
+    RHOG = '0.2195'
+    HEIGHT =  '0'
+    IOUT = '2 3 4'
+
+    smarts_res = SMARTSSRRL(IOUT, YEAR=YEAR,MONTH=MONTH,DAY=DAY,HOUR=HOUR, LATIT=LATIT, LONGIT=LONGIT, ALTIT=ALTIT, 
+                        ZONE=ZONE, W=W, RH=RH, TAIR=TAIR, SEASON=SEASON, TDAY=TDAY, SPR=SPR, TAU5=TAU5, TILT=TILT, WAZIM=WAZIM,
+               RHOG=RHOG, HEIGHT=HEIGHT, material='DryGrass', min_wvl='280', max_wvl='4000')
+    
     
     dni_spectrum = spectral_property(smarts_res['Direct_normal_irradiance'],
                                      smarts_res['Wvlgth'], interpolation='linear')
